@@ -5,3 +5,9 @@ body {
   padding: 0;
   background: #050816;
 }
+
+html {
+
+  scroll-behavior: smooth;
+
+}
