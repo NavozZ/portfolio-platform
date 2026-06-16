@@ -8,6 +8,7 @@ import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import Admin from "./components/Admin"
 import Login from "./components/Login"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 export default function App() {
 
@@ -43,7 +44,9 @@ text-white
 
       <Contact />
 
-      <Admin />
+      <ProtectedRoute>
+        <Admin />
+      </ProtectedRoute>
 
       <Login />
 

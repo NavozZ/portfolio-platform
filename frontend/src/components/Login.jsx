@@ -22,6 +22,8 @@ useState("")
 const submit=
 async()=>{
 
+try{
+
 const res=
 await axios.post(
 
@@ -42,9 +44,17 @@ res.data.token
 
 )
 
+window.location.reload()
+
+}
+
+catch{
+
 alert(
-"Logged In"
+"Invalid Credentials"
 )
+
+}
 
 }
 
