@@ -8,8 +8,22 @@ import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 
 export default function App() {
+
   return (
-    <div className="bg-[#050816] text-white">
+
+    <div
+      className="
+
+bg-gradient-to-b
+from-[#050816]
+via-[#0c1220]
+to-[#050816]
+
+text-white
+
+"
+
+    >
 
       <Navbar />
 
@@ -28,5 +42,7 @@ export default function App() {
       <Footer />
 
     </div>
+
   )
+
 }

@@ -10,100 +10,125 @@ min-h-screen
 flex
 items-center
 justify-center
-px-8
+pt-32
+max-w-7xl
+mx-auto
+px-6
 "
         >
 
-            <div className="text-center">
+            <div
+                className="
+max-w-3xl
+mx-auto
+text-center
+"
+            >
+                <div className="text-center space-y-6">
 
-                <motion.h1
+                    <motion.h1
 
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
 
-                    transition={{
-                        duration: 1
-                    }}
+                        transition={{
+                            duration: 1
+                        }}
 
-                    className="
+                        className="
 text-6xl
 font-bold
 "
-                >
+                    >
 
-                    Navodya
-                    <span className="text-purple-500">
+                        Navodya
+                        <span className="text-purple-500">
 
-                        Theshan
+                            Theshan
 
-                    </span>
+                        </span>
 
-                </motion.h1>
+                    </motion.h1>
 
-                <motion.p
+                    <motion.p
 
-                    initial={{ opacity: 0 }}
+                        initial={{ opacity: 0 }}
 
-                    animate={{ opacity: 1 }}
+                        animate={{ opacity: 1 }}
 
-                    transition={{
-                        delay: .5
-                    }}
+                        transition={{
+                            delay: .5
+                        }}
 
-                    className="
+                        className="
 mt-6
 text-2xl
 text-gray-300
 "
-                >
+                    >
 
-                    Aspiring DevOps Engineer
+                        Aspiring DevOps Engineer
 
-                </motion.p>
+                    </motion.p>
 
-                <p className="mt-2">
+                    <p className="mt-2">
 
-                    Full-Stack Developer • Cloud Enthusiast
+                        Full-Stack Developer • Cloud Enthusiast
 
-                </p>
+                    </p>
 
-                <div
-                    className="
+                    <div
+                        className="
 mt-10
 flex
-gap-4
 justify-center
+gap-6
+flex-wrap
 "
-                >
+                    >
 
-                    <button
-                        className="
+                        <button
+                            className="
 bg-purple-600
+hover:bg-purple-700
+hover:scale-105
+duration-300
+
 px-8
-py-3
+py-4
+
 rounded-xl
 "
-                    >
+                        >
 
-                        View Projects
+                            View Projects
 
-                    </button>
+                        </button>
 
-                    <button
-                        className="
+                        <button
+                            className="
 border
+border-white/30
+
+hover:bg-white
+hover:text-black
+
+duration-300
+
 px-8
-py-3
+py-4
+
 rounded-xl
 "
-                    >
+                        >
 
-                        Download CV
+                            Download CV
 
-                    </button>
+                        </button>
+
+                    </div>
 
                 </div>
-
             </div>
 
         </section>

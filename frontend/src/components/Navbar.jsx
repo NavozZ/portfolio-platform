@@ -1,55 +1,77 @@
 export default function Navbar() {
 
     return (
-
-        <nav
+        <div
             className="
-fixed
-w-full
-top-0
-z-50
-bg-[#050816]
+max-w-7xl
+mx-auto
+
 flex
 justify-between
-p-6
+
+items-center
+
+px-8
+py-5
 "
         >
+            <nav
 
-            <h1
                 className="
+
+fixed
+top-0
+w-full
+
+backdrop-blur-md
+
+bg-black/20
+
+border-b
+
+border-white/10
+
+z-50
+
+"
+
+            >
+
+                <h1
+                    className="
 text-purple-400
 font-bold
 "
-            >
+                >
 
-                NT
+                    NT
 
-            </h1>
+                </h1>
 
-            <div className="flex gap-8">
+                <div className="flex gap-8">
 
-                <a href="#">
+                    <a href="#">
 
-                    About
+                        About
 
-                </a>
+                    </a>
 
-                <a href="#">
+                    <a href="#">
 
-                    Projects
+                        Projects
 
-                </a>
+                    </a>
 
-                <a href="#">
+                    <a href="#">
 
-                    Contact
+                        Contact
 
-                </a>
+                    </a>
 
-            </div>
+                </div>
 
-        </nav>
-
+            </nav>
+        </div>
     )
 
 }
