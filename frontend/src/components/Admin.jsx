@@ -1,7 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
+import { getProjects, deleteProject } from "../services/projectService"
 
 export default function Admin(){
+
+const[
+projects,
+setProjects
+]=
+useState([])
 
 const[
 form,
@@ -13,6 +20,22 @@ description:"",
 stack:""
 
 })
+
+useEffect(()=>{
+
+load()
+
+},[])
+
+const load=
+async()=>{
+
+const data=
+await getProjects()
+
+setProjects(data)
+
+}
 
 const handleChange=(e)=>{
 
@@ -59,6 +82,19 @@ description:"",
 stack:""
 
 })
+
+load()
+
+}
+
+const remove=
+async(id)=>{
+
+await deleteProject(
+id
+)
+
+load()
 
 }
 
@@ -190,6 +226,73 @@ Save Project
 </button>
 
 </form>
+
+<div
+className="
+mt-16
+space-y-6
+"
+>
+
+{
+
+projects.map(
+(item)=>(
+
+<div
+
+key={item._id}
+
+className="
+
+bg-white/5
+
+p-6
+
+rounded-2xl
+
+"
+
+>
+
+<h3>
+
+{item.title}
+
+</h3>
+
+<button
+
+onClick={()=>remove(
+item._id
+)}
+
+className="
+
+mt-4
+
+bg-red-500
+
+px-5
+py-2
+
+rounded
+
+"
+
+>
+
+Delete
+
+</button>
+
+</div>
+
+))
+
+}
+
+</div>
 
 </section>
 
