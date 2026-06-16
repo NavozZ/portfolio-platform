@@ -7,6 +7,7 @@ import Experience from "./components/Experience"
 import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import Admin from "./components/Admin"
+import Login from "./components/Login"
 
 export default function App() {
 
@@ -43,6 +44,8 @@ text-white
       <Contact />
 
       <Admin />
+
+      <Login />
 
       <Footer />
 
