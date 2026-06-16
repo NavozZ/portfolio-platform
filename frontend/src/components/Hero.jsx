@@ -6,6 +6,7 @@ export default function Hero() {
 
         <section
             className="
+scroll-mt-24
 min-h-screen
 flex
 items-center

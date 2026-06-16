@@ -1,5 +1,6 @@
 export default function Projects() {
     return <section className="
+scroll-mt-24
 min-h-screen
 max-w-7xl
 mx-auto

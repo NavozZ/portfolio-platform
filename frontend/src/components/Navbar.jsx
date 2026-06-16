@@ -68,6 +68,12 @@ gap-8
 
                     </a>
 
+                    <a href="#skills">
+
+                        Skills
+
+                    </a>
+
                     <a href="#projects">
 
                         Projects
