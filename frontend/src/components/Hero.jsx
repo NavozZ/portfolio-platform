@@ -36,10 +36,10 @@ text-center
                         }}
 
                         className="
-text-6xl
+text-5xl
+md:text-7xl
 font-bold
-"
-                    >
+"                    >
 
                         Navodya
                         <span className="text-purple-500">
@@ -62,7 +62,8 @@ font-bold
 
                         className="
 mt-6
-text-2xl
+text-xl
+md:text-3xl
 text-gray-300
 "
                     >

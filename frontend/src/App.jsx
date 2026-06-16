@@ -14,6 +14,8 @@ export default function App() {
     <div
       className="
 
+min-h-screen
+
 bg-gradient-to-b
 from-[#050816]
 via-[#0c1220]
