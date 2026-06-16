@@ -1,11 +1,19 @@
-export default function Footer() {
-    return <section className="
-scroll-mt-24
-min-h-screen
-max-w-7xl
-mx-auto
-px-6
-flex
-items-center
-">Footer</section>
+export default function Footer(){
+
+return(
+
+<footer
+className="
+py-16
+text-center
+text-gray-500
+"
+>
+
+© 2026 Navodya Theshan
+
+</footer>
+
+)
+
 }

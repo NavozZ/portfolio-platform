@@ -80,6 +80,12 @@ gap-8
 
                     </a>
 
+                    <a href="#experience">
+
+                        Experience
+
+                    </a>
+
                     <a href="#contact">
 
                         Contact
