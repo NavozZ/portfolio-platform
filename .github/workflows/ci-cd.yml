@@ -1,0 +1,77 @@
+# GitHub Actions CI/CD Workflow
+name: Portfolio CI/CD
+
+on:
+
+  push:
+
+    branches:
+
+      - main
+
+  pull_request:
+
+jobs:
+
+build:
+
+runs-on:
+ubuntu-latest
+
+steps:
+
+- name:
+Checkout
+
+uses:
+actions/checkout@v4
+
+
+- name:
+Setup Node
+
+uses:
+actions/setup-node@v4
+
+with:
+
+node-version:
+22
+
+
+- name:
+Install Frontend
+
+run: |
+
+ cd frontend
+
+ npm install
+
+
+- name:
+Build Frontend
+
+run: |
+
+ cd frontend
+
+ npm run build
+
+
+- name:
+Install Backend
+
+run: |
+
+ cd backend
+
+ npm install
+
+
+- name:
+Build Docker
+
+run: |
+
+ docker compose build
