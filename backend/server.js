@@ -27,6 +27,22 @@ message:"Portfolio API Running"
 
 })
 
+app.get(
+"/health",
+(req,res)=>{
+
+res.status(200)
+
+.json({
+
+status:
+"healthy"
+
+})
+
+}
+)
+
 const PORT=
 process.env.PORT || 5000
 
