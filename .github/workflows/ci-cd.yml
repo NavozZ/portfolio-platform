@@ -5,41 +5,40 @@ on:
     branches:
       - main
 
-  pull_request:
-
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+
         with:
-          node-version: 22
+          username: ${{ secrets.DOCKER_USERNAME }}
 
-      - name: Install Frontend
-        run: |
-          cd frontend
-          npm install
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Frontend
-        run: |
-          cd frontend
-          npm run build
 
-      - name: Install Backend
-        run: |
-          cd backend
-          npm install
+        uses: docker/build-push-action@v6
 
-      - name: Run Tests
-        run: |
-          cd backend
-          npm test
+        with:
+          context: ./frontend
 
-      - name: Build Docker
-        run: |
-          docker compose build
+          push: true
+
+          tags: ${{ secrets.DOCKER_USERNAME }}/portfolio-frontend:latest
+
+      - name: Build Backend
+
+        uses: docker/build-push-action@v6
+
+        with:
+          context: ./backend
+
+          push: true
+
+          tags: ${{ secrets.DOCKER_USERNAME }}/portfolio-backend:latest
