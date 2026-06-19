@@ -56,7 +56,7 @@ async(e)=>{
 e.preventDefault()
 
 await axios.post(
-"http://localhost:5000/api/projects",
+`${import.meta.env.VITE_API_URL}/projects`,
 {
 title:form.title,
 description:form.description,
