@@ -4,6 +4,8 @@ import {
 
 getProjects,
 
+getProjectById,
+
 createProject,
 
 deleteProject,
@@ -23,6 +25,11 @@ router.get(
 getProjects
 )
 
+router.get(
+"/:id",
+getProjectById
+)
+
 router.post(
 "/",
 createProject
@@ -39,3 +46,4 @@ updateProject
 )
 
 export default router
+

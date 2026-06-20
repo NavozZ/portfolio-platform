@@ -1,54 +1,38 @@
+import { Routes, Route } from "react-router-dom"
 import Navbar from "./components/Navbar"
-import Hero from "./components/Hero"
-import About from "./components/About"
-import Skills from "./components/Skills"
-import Projects from "./components/Projects"
-import Experience from "./components/Experience"
-import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import Admin from "./components/Admin"
 import Login from "./components/Login"
 import ProtectedRoute from "./components/ProtectedRoute"
+import Home from "./pages/Home"
+import AboutPage from "./pages/About"
+import ProjectsPage from "./pages/Projects"
+import ProjectDetails from "./pages/ProjectDetails"
+import ContactPage from "./pages/Contact"
 
 export default function App() {
 
   return (
 
     <div
-      className="
-
-min-h-screen
-
-bg-gradient-to-b
-from-[#050816]
-via-[#0c1220]
-to-[#050816]
-
-text-white
-
-"
-
+      className="min-h-screen bg-cream text-ink dark:bg-[#0a0a0a] dark:text-white transition-colors duration-300"
     >
 
       <Navbar />
 
-      <Hero />
-
-      <About />
-
-      <Skills />
-
-      <Projects />
-
-      <Experience />
-
-      <Contact />
-
-      <ProtectedRoute>
-        <Admin />
-      </ProtectedRoute>
-
-      <Login />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:id" element={<ProjectDetails />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        } />
+      </Routes>
 
       <Footer />
 

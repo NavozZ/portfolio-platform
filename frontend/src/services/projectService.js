@@ -41,3 +41,9 @@ data
 )
 
 }
+
+export const getProjectById = async (id) => {
+  const response = await axios.get(`${API}/${id}`)
+  return response.data
+}
+
