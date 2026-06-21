@@ -33,18 +33,18 @@ export default function Projects() {
             <div className="text-center max-w-2xl mx-auto px-8 mb-20">
 
                 <p className="text-xs uppercase tracking-[0.3em] text-accent-warm flex items-center justify-center gap-2 mb-6">
-                    <span>→</span> Selected Works
+                    <span>→</span> Selected Work
                 </p>
 
                 <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-ink dark:text-white transition-colors duration-300">
-                    Design That
+                    Code That Ships,
                     <br />
-                    Drives Results
+                    Systems That Scale
                 </h2>
 
                 <p className="mt-6 text-ink-light dark:text-white/50 text-sm leading-relaxed max-w-md mx-auto transition-colors duration-300">
-                    Hand-picked projects built for real brands, real
-                    goals, real growth.
+                    Full-stack and DevOps projects — from AI-powered platforms to
+                    containerized production pipelines.
                 </p>
 
             </div>

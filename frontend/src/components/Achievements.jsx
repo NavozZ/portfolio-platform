@@ -25,13 +25,13 @@ export default function Achievements() {
         <section id="achievements" className="scroll-mt-24 py-32 transition-colors duration-300">
             <div className="text-center max-w-2xl mx-auto px-8 mb-20">
                 <p className="text-xs uppercase tracking-[0.3em] text-accent-warm flex items-center justify-center gap-2 mb-6">
-                    <span>→</span> Hackathons & Awards
+                    <span>→</span> Recognition
                 </p>
                 <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-ink dark:text-white transition-colors duration-300">
-                    Achievements
+                    Where the Work Paid Off
                 </h2>
                 <p className="mt-6 text-ink-light dark:text-white/50 text-sm leading-relaxed max-w-md mx-auto transition-colors duration-300">
-                    Competitions, hackathons, and notable milestones.
+                    Hackathon wins and competitive builds under real time pressure.
                 </p>
             </div>
 

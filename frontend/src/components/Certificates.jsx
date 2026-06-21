@@ -33,10 +33,10 @@ export default function Certificates() {
                     <span>→</span> Credentials
                 </p>
                 <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-ink dark:text-white transition-colors duration-300">
-                    Certificates
+                    Always Learning, Always Building
                 </h2>
                 <p className="mt-6 text-ink-light dark:text-white/50 text-sm leading-relaxed max-w-md mx-auto transition-colors duration-300">
-                    Professional certifications and course completions.
+                    Certifications across cloud, DevOps, and full-stack development.
                 </p>
             </div>
 

@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { getHeroImage } from "../services/settingsService"
 import { useTheme } from "../context/ThemeContext"
 import { Sun, Moon } from "lucide-react"
+import { FiGithub, FiLinkedin } from "react-icons/fi"
 import fallbackImg from "../assets/hero.png"
 
 export default function Hero() {
@@ -74,8 +75,15 @@ export default function Hero() {
                 transition={{ delay: 1, duration: 0.8 }}
                 className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-4 z-10"
             >
+                <a href="https://github.com/NavozZ" target="_blank" rel="noopener noreferrer" className="text-ink-light hover:text-ink dark:text-white/50 dark:hover:text-white transition-colors duration-300">
+                    <FiGithub size={18} strokeWidth={2} />
+                </a>
+                <a href="https://www.linkedin.com/in/navodya-theshan" target="_blank" rel="noopener noreferrer" className="text-ink-light hover:text-ink dark:text-white/50 dark:hover:text-white transition-colors duration-300">
+                    <FiLinkedin size={18} strokeWidth={2} />
+                </a>
+                <div className="w-px h-12 bg-ink/10 dark:bg-white/10 transition-colors duration-300 my-2" />
                 <span className="writing-vertical rotate-180 text-[10px] tracking-[0.25em] uppercase text-ink-light dark:text-white/50 transition-colors duration-300">
-                    Follow Us — Fb. / Ig / Tw.
+                    Follow me
                 </span>
             </motion.div>
 
@@ -129,19 +137,18 @@ export default function Hero() {
                     </a>
                 </motion.div>
 
-                {/* Bottom-right: avatar + play intro */}
+                {/* Bottom-right: avatar */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9, duration: 0.8 }}
-                    className="flex items-center gap-3"
+                    className="flex items-center"
                 >
                     <img
                         src={heroImg}
                         alt="Profile"
-                        className="w-12 h-12 rounded-full object-cover border-2 border-ink/10 dark:border-white/10 transition-colors duration-300"
+                        className="w-24 h-24 rounded-full object-cover border-2 border-ink/10 dark:border-white/10 transition-colors duration-300"
                     />
-                    <span className="text-sm font-medium text-ink dark:text-white transition-colors duration-300">Play Intro</span>
                 </motion.div>
 
             </div>
