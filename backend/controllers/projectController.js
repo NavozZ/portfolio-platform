@@ -66,6 +66,8 @@ if (req.files) {
   }
 }
 
+if (data.order === "" || data.order === undefined) data.order = 0
+
 const project=
 await Project.create(
 data
@@ -77,7 +79,7 @@ res.status(201)
 }
 
 catch(error){
-
+console.error("Project create error:", error)
 res.status(500)
 .json({
 message:error.message
@@ -129,6 +131,8 @@ if (req.files) {
   }
 }
 
+if (data.order === "" || data.order === undefined) data.order = 0
+
 const project=
 await Project.findByIdAndUpdate(
 
@@ -149,7 +153,7 @@ project
 }
 
 catch(error){
-
+console.error("Project update error:", error)
 res.status(500)
 .json({
 message:error.message

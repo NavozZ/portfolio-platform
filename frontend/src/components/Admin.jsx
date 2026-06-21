@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { getProjects, deleteProject } from "../services/projectService"
+import { getProjects, deleteProject, createProject, updateProject } from "../services/projectService"
 import { getCertificates, createCertificate, updateCertificate, deleteCertificate } from "../services/certificateService"
 import { getAchievements, createAchievement, updateAchievement, deleteAchievement } from "../services/achievementService"
 import { getHeroImage, updateHeroImage } from "../services/settingsService"
@@ -12,6 +12,8 @@ projects,
 setProjects
 ]=
 useState([])
+
+const [editingProjectId, setEditingProjectId] = useState(null)
 
 const [form, setForm] = useState({
   title: "",
@@ -123,15 +125,19 @@ const handleSubmit = async (e) => {
       const arr = form.stack ? form.stack.split(",").map(i => i.trim()).filter(Boolean) : []
       arr.forEach(item => formData.append("stack", item))
     } else if (key !== "thumbnail" && key !== "screenshots") {
+      if (form[key] === "") return // Prevent Mongoose CastErrors on empty dates/numbers
       formData.append(key, form[key])
     }
   })
   
-  await axios.post(`${import.meta.env.VITE_API_URL}/projects`, formData, {
-    headers: { "Content-Type": "multipart/form-data" }
-  })
+  if (editingProjectId) {
+    await updateProject(editingProjectId, formData)
+    setEditingProjectId(null)
+  } else {
+    await createProject(formData)
+  }
   
-  alert("Project Added")
+  alert(editingProjectId ? "Project Updated" : "Project Added")
   
   setForm({
     title: "", category: "", thumbnail: null, description: "", longDescription: "",
@@ -139,6 +145,23 @@ const handleSubmit = async (e) => {
   })
   
   load()
+}
+
+const editProject = (project) => {
+  setEditingProjectId(project._id)
+  setForm({
+    title: project.title || "",
+    category: project.category || "",
+    thumbnail: null,
+    description: project.description || "",
+    longDescription: project.longDescription || "",
+    stack: project.stack ? project.stack.join(", ") : "",
+    liveUrl: project.liveUrl || "",
+    githubUrl: project.githubUrl || "",
+    screenshots: null,
+    relatedReportUrl: project.relatedReportUrl || "",
+    order: project.order || 0
+  })
 }
 
 const remove=
@@ -171,7 +194,10 @@ const handleCertSubmit = async (e) => {
   const formData = new FormData()
   Object.keys(certForm).forEach(key => {
     if (key === "image" && certForm.image) formData.append("image", certForm.image)
-    else if (key !== "image") formData.append(key, certForm[key])
+    else if (key !== "image") {
+      if (certForm[key] === "") return
+      formData.append(key, certForm[key])
+    }
   })
   
   if (editingCertId) {
@@ -218,7 +244,10 @@ const handleAchSubmit = async (e) => {
   const formData = new FormData()
   Object.keys(achForm).forEach(key => {
     if (key === "certificateImage" && achForm.certificateImage) formData.append("certificateImage", achForm.certificateImage)
-    else if (key !== "certificateImage") formData.append(key, achForm[key])
+    else if (key !== "certificateImage") {
+      if (achForm[key] === "") return
+      formData.append(key, achForm[key])
+    }
   })
   
   if (editingAchId) {
@@ -360,22 +389,17 @@ space-y-6
   <input type="number" name="order" value={form.order} onChange={handleChange} placeholder="Sort Order (0 is first)" className="w-full p-4 rounded-xl bg-white/10" />
 </div>
 
-<button
-
-className="
-bg-purple-600
-
-px-8
-py-4
-
-rounded-xl
-"
-
->
-
-Save Project
-
+<button className="bg-purple-600 px-8 py-4 rounded-xl">
+  {editingProjectId ? "Update Project" : "Save Project"}
 </button>
+{editingProjectId && (
+  <button type="button" onClick={() => { 
+    setEditingProjectId(null); 
+    setForm({ title: "", category: "", thumbnail: null, description: "", longDescription: "", stack: "", liveUrl: "", githubUrl: "", screenshots: null, relatedReportUrl: "", order: 0 }) 
+  }} className="ml-4 px-6 py-4 rounded-xl bg-white/10 hover:bg-white/20">
+    Cancel
+  </button>
+)}
 
 </form>
 
@@ -413,30 +437,10 @@ rounded-2xl
 
 </h3>
 
-<button
-
-onClick={()=>remove(
-item._id
-)}
-
-className="
-
-mt-4
-
-bg-red-500
-
-px-5
-py-2
-
-rounded
-
-"
-
->
-
-Delete
-
-</button>
+<div className="mt-4 flex gap-3">
+  <button onClick={() => editProject(item)} className="bg-blue-500 px-5 py-2 rounded">Edit</button>
+  <button onClick={() => remove(item._id)} className="bg-red-500 px-5 py-2 rounded">Delete</button>
+</div>
 
 </div>
 

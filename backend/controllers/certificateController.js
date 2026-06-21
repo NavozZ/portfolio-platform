@@ -58,6 +58,9 @@ try{
 const data = { ...req.body }
 if (req.file) data.image = req.file.path
 
+if (data.issueDate === "") data.issueDate = undefined
+if (data.order === "" || data.order === undefined) data.order = 0
+
 const certificate=
 await Certificate.create(
 data
@@ -69,7 +72,7 @@ res.status(201)
 }
 
 catch(error){
-
+console.error("Certificate create error:", error)
 res.status(500)
 .json({
 message:error.message
@@ -113,6 +116,9 @@ try{
 const data = { ...req.body }
 if (req.file) data.image = req.file.path
 
+if (data.issueDate === "") data.issueDate = undefined
+if (data.order === "" || data.order === undefined) data.order = 0
+
 const certificate=
 await Certificate.findByIdAndUpdate(
 
@@ -133,7 +139,7 @@ certificate
 }
 
 catch(error){
-
+console.error("Certificate update error:", error)
 res.status(500)
 .json({
 message:error.message

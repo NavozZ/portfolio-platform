@@ -26,6 +26,13 @@ await axios.delete(
 
 }
 
+export const createProject = async (data) => {
+  const response = await axios.post(API, data, {
+    headers: { "Content-Type": "multipart/form-data" }
+  })
+  return response.data
+}
+
 export const updateProject=
 async(
 id,

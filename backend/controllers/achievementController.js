@@ -58,6 +58,9 @@ try{
 const data = { ...req.body }
 if (req.file) data.certificateImage = req.file.path
 
+if (data.date === "") data.date = undefined
+if (data.order === "" || data.order === undefined) data.order = 0
+
 const achievement=
 await Achievement.create(
 data
@@ -69,7 +72,7 @@ res.status(201)
 }
 
 catch(error){
-
+console.error("Achievement create error:", error)
 res.status(500)
 .json({
 message:error.message
@@ -113,6 +116,9 @@ try{
 const data = { ...req.body }
 if (req.file) data.certificateImage = req.file.path
 
+if (data.date === "") data.date = undefined
+if (data.order === "" || data.order === undefined) data.order = 0
+
 const achievement=
 await Achievement.findByIdAndUpdate(
 
@@ -133,7 +139,7 @@ achievement
 }
 
 catch(error){
-
+console.error("Achievement update error:", error)
 res.status(500)
 .json({
 message:error.message
