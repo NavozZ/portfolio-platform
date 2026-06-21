@@ -14,9 +14,10 @@ export default function Achievements() {
     const loadAchievements = async () => {
         try {
             const data = await getAchievements()
-            setAchievements(data)
+            setAchievements(Array.isArray(data) ? data : [])
         } catch (error) {
             console.log(error)
+            setAchievements([])
         }
     }
 

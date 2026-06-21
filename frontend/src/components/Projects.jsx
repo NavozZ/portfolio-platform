@@ -15,9 +15,10 @@ export default function Projects() {
     const loadProjects = async () => {
         try {
             const data = await getProjects()
-            setProjects(data)
+            setProjects(Array.isArray(data) ? data : [])
         } catch (error) {
             console.log(error)
+            setProjects([])
         }
     }
 

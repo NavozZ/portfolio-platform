@@ -15,9 +15,10 @@ export default function Certificates() {
     const loadCertificates = async () => {
         try {
             const data = await getCertificates()
-            setCertificates(data)
+            setCertificates(Array.isArray(data) ? data : [])
         } catch (error) {
             console.log(error)
+            setCertificates([])
         }
     }
 
