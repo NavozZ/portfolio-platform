@@ -9,6 +9,7 @@ import AboutPage from "./pages/About"
 import ProjectsPage from "./pages/Projects"
 import ProjectDetails from "./pages/ProjectDetails"
 import ContactPage from "./pages/Contact"
+import Scene3D from "./three/Scene3D"
 
 export default function App() {
 
@@ -19,6 +20,9 @@ export default function App() {
     >
 
       <Navbar />
+
+      {/* ── Persistent 3D background layer ── */}
+      <Scene3D />
 
       <Routes>
         <Route path="/" element={<Home />} />
