@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { getHeroImage } from "../services/settingsService"
 import { useTheme } from "../context/ThemeContext"
+import { Sun, Moon } from "lucide-react"
 import fallbackImg from "../assets/hero.png"
 
 export default function Hero() {
@@ -39,12 +40,27 @@ export default function Hero() {
                 transition={{ delay: 1, duration: 0.8 }}
                 className="hidden md:flex fixed left-6 top-1/2 -translate-y-1/2 flex-col items-center gap-6 z-10"
             >
-                <span 
+                {/* Mini pill toggle */}
+                <button
+                    role="switch"
+                    aria-checked={isDark}
+                    aria-label="Toggle dark mode"
                     onClick={toggleTheme}
-                    className="writing-vertical rotate-180 text-[10px] tracking-[0.25em] uppercase text-ink-light dark:text-white/50 cursor-pointer hover:text-ink dark:hover:text-white transition-colors"
+                    className={`relative w-[26px] h-12 rounded-full transition-colors duration-300 flex flex-col items-center py-[3px] ${
+                        isDark ? "bg-accent-warm" : "bg-ink/15"
+                    }`}
                 >
-                    {isDark ? "Light Mode ☀" : "Dark Mode ☾"}
-                </span>
+                    <span
+                        className={`w-5 h-5 rounded-full bg-cream dark:bg-[#0a0a0a] flex items-center justify-center shadow-sm transition-transform duration-300 ${
+                            isDark ? "translate-y-[22px]" : "translate-y-0"
+                        }`}
+                    >
+                        {isDark
+                            ? <Sun size={11} className="text-accent-warm" strokeWidth={2.5} />
+                            : <Moon size={11} className="text-ink-light" strokeWidth={2.5} />
+                        }
+                    </span>
+                </button>
                 <div className="w-px h-12 bg-ink/10 dark:bg-white/10 transition-colors duration-300" />
                 <span className="writing-vertical rotate-180 text-[10px] tracking-[0.25em] uppercase text-ink-light dark:text-white/50 transition-colors duration-300">
                     Scroll

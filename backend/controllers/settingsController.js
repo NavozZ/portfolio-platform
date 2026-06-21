@@ -11,8 +11,11 @@ export const getHeroImage = async (req, res) => {
 
 export const updateHeroImage = async (req, res) => {
   try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file provided" })
+    }
     const settings = await SiteSettings.getSettings()
-    settings.heroImage = req.body.heroImage
+    settings.heroImage = req.file.path
     await settings.save()
     res.json({ message: "Hero image updated", heroImage: settings.heroImage })
   } catch (error) {

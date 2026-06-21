@@ -17,6 +17,8 @@ updateProject
 from
 "../controllers/projectController.js"
 
+import { upload } from "../config/cloudinary.js"
+
 const router=
 express.Router()
 
@@ -32,6 +34,7 @@ getProjectById
 
 router.post(
 "/",
+upload.fields([{ name: "thumbnail", maxCount: 1 }, { name: "screenshots", maxCount: 10 }]),
 createProject
 )
 
@@ -42,6 +45,7 @@ deleteProject
 
 router.put(
 "/:id",
+upload.fields([{ name: "thumbnail", maxCount: 1 }, { name: "screenshots", maxCount: 10 }]),
 updateProject
 )
 

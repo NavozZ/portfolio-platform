@@ -55,9 +55,20 @@ async(req,res)=>{
 
 try{
 
+const data = { ...req.body }
+
+if (req.files) {
+  if (req.files.thumbnail && req.files.thumbnail.length > 0) {
+    data.thumbnail = req.files.thumbnail[0].path
+  }
+  if (req.files.screenshots && req.files.screenshots.length > 0) {
+    data.screenshots = req.files.screenshots.map(file => file.path)
+  }
+}
+
 const project=
 await Project.create(
-req.body
+data
 )
 
 res.status(201)
@@ -107,12 +118,23 @@ async(req,res)=>{
 
 try{
 
+const data = { ...req.body }
+
+if (req.files) {
+  if (req.files.thumbnail && req.files.thumbnail.length > 0) {
+    data.thumbnail = req.files.thumbnail[0].path
+  }
+  if (req.files.screenshots && req.files.screenshots.length > 0) {
+    data.screenshots = req.files.screenshots.map(file => file.path)
+  }
+}
+
 const project=
 await Project.findByIdAndUpdate(
 
 req.params.id,
 
-req.body,
+data,
 
 {
 new:true

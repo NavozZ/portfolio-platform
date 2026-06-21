@@ -1,16 +1,13 @@
 import { Link, useLocation } from "react-router-dom"
 import { useTheme } from "../context/ThemeContext"
+import { useAuth } from "../context/AuthContext"
+import { Sun, Moon } from "lucide-react"
 
 export default function Navbar() {
     const location = useLocation()
     const isHome = location.pathname === "/"
-    const token = localStorage.getItem("token")
     const { isDark, toggleTheme } = useTheme()
-
-    const logout = () => {
-        localStorage.removeItem("token")
-        window.location.reload()
-    }
+    const { token, logout } = useAuth()
 
     const NavLink = ({ to, anchor, children, accent }) => {
         const base = "text-sm tracking-wide transition-colors duration-200"
@@ -41,9 +38,10 @@ export default function Navbar() {
                     <NavLink to="/about" anchor="#about">About me</NavLink>
                     <NavLink to="/projects" anchor="#projects">Projects</NavLink>
                     <NavLink to="/contact" anchor="#contact" accent>Contact</NavLink>
+                    {token && <NavLink to="/admin" anchor={null}>Admin</NavLink>}
                 </div>
 
-                {/* Right icon button */}
+                {/* Right controls */}
                 <div className="flex items-center gap-4">
                     {token && (
                         <button
@@ -53,11 +51,26 @@ export default function Navbar() {
                             Logout
                         </button>
                     )}
-                    <button 
-                        onClick={toggleTheme} 
-                        className="w-10 h-10 rounded-full border border-ink/10 dark:border-white/10 flex items-center justify-center hover:bg-ink/5 dark:hover:bg-white/5 transition-colors duration-200 text-ink-light dark:text-white/70"
+                    {/* Pill toggle switch */}
+                    <button
+                        role="switch"
+                        aria-checked={isDark}
+                        aria-label="Toggle dark mode"
+                        onClick={toggleTheme}
+                        className={`relative w-14 h-[30px] rounded-full transition-colors duration-300 flex items-center px-[3px] ${
+                            isDark ? "bg-accent-warm" : "bg-ink/15"
+                        }`}
                     >
-                        {isDark ? "☀" : "☾"}
+                        <span
+                            className={`w-6 h-6 rounded-full bg-cream dark:bg-[#0a0a0a] flex items-center justify-center shadow-sm transition-transform duration-300 ${
+                                isDark ? "translate-x-[22px]" : "translate-x-0"
+                            }`}
+                        >
+                            {isDark
+                                ? <Sun size={13} className="text-accent-warm" strokeWidth={2.5} />
+                                : <Moon size={13} className="text-ink-light" strokeWidth={2.5} />
+                            }
+                        </span>
                     </button>
                 </div>
 

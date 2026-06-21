@@ -36,7 +36,8 @@ await axios.put(
 
 `${API}/${id}`,
 
-data
+data,
+{ headers: { "Content-Type": "multipart/form-data" } }
 
 )
 

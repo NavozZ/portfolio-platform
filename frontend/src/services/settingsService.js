@@ -7,7 +7,11 @@ export const getHeroImage = async () => {
   return response.data.heroImage
 }
 
-export const updateHeroImage = async (heroImage) => {
-  const response = await axios.put(`${API}/hero-image`, { heroImage })
+export const updateHeroImage = async (file) => {
+  const formData = new FormData()
+  formData.append("heroImage", file)
+  const response = await axios.put(`${API}/hero-image`, formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  })
   return response.data
 }
