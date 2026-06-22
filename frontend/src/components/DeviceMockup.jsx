@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export default function DeviceMockup({ liveUrl, thumbnail, title }) {
     const [device, setDevice] = useState("desktop")
@@ -55,6 +55,29 @@ export default function DeviceMockup({ liveUrl, thumbnail, title }) {
 }
 
 function DesktopFrame({ liveUrl, thumbnail, title }) {
+    const containerRef = useRef(null);
+    const [scale, setScale] = useState(1);
+
+    useEffect(() => {
+        if (!containerRef.current || !liveUrl) return;
+        
+        let timeoutId;
+        const observer = new ResizeObserver((entries) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                for (let entry of entries) {
+                    setScale(entry.contentRect.width / 1280);
+                }
+            }, 50); // Debounce resize calculations
+        });
+        
+        observer.observe(containerRef.current);
+        return () => {
+            observer.disconnect();
+            clearTimeout(timeoutId);
+        };
+    }, [liveUrl]);
+
     return (
         <div className="w-full max-w-4xl">
             {/* Screen bezel */}
@@ -73,13 +96,13 @@ function DesktopFrame({ liveUrl, thumbnail, title }) {
                     </div>
                 </div>
                 {/* Screen content */}
-                <div className="aspect-[16/10] bg-[#0a0a0a] rounded-t-sm overflow-hidden">
+                <div ref={containerRef} className="aspect-[16/10] bg-[#0a0a0a] rounded-t-sm overflow-hidden">
                     {liveUrl ? (
                         <iframe
                             src={liveUrl}
                             title={title || "Project preview"}
                             className="w-[1280px] h-[800px] origin-top-left border-0"
-                            style={{ transform: "scale(0.56)", transformOrigin: "top left" }}
+                            style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
                             sandbox="allow-scripts allow-same-origin"
                         />
                     ) : thumbnail ? (
@@ -100,6 +123,29 @@ function DesktopFrame({ liveUrl, thumbnail, title }) {
 }
 
 function MobileFrame({ liveUrl, thumbnail, title }) {
+    const containerRef = useRef(null);
+    const [scale, setScale] = useState(1);
+
+    useEffect(() => {
+        if (!containerRef.current || !liveUrl) return;
+        
+        let timeoutId;
+        const observer = new ResizeObserver((entries) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                for (let entry of entries) {
+                    setScale(entry.contentRect.width / 390);
+                }
+            }, 50); // Debounce resize calculations
+        });
+        
+        observer.observe(containerRef.current);
+        return () => {
+            observer.disconnect();
+            clearTimeout(timeoutId);
+        };
+    }, [liveUrl]);
+
     return (
         <div className="w-[280px]">
             {/* Phone bezel */}
@@ -109,13 +155,13 @@ function MobileFrame({ liveUrl, thumbnail, title }) {
                     <div className="w-20 h-4 bg-[#0a0a0a] rounded-full" />
                 </div>
                 {/* Screen content */}
-                <div className="aspect-[9/19.5] bg-[#0a0a0a] rounded-2xl overflow-hidden">
+                <div ref={containerRef} className="aspect-[9/19.5] bg-[#0a0a0a] rounded-2xl overflow-hidden">
                     {liveUrl ? (
                         <iframe
                             src={liveUrl}
                             title={title || "Project preview"}
                             className="w-[390px] h-[844px] origin-top-left border-0"
-                            style={{ transform: "scale(0.645)", transformOrigin: "top left" }}
+                            style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
                             sandbox="allow-scripts allow-same-origin"
                         />
                     ) : thumbnail ? (
