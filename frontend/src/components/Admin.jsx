@@ -1,9 +1,22 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { getProjects, deleteProject, createProject, updateProject } from "../services/projectService"
+import { getProjects, deleteProject, createProject, updateProject, updateProjectOrder } from "../services/projectService"
 import { getCertificates, createCertificate, updateCertificate, deleteCertificate } from "../services/certificateService"
 import { getAchievements, createAchievement, updateAchievement, deleteAchievement } from "../services/achievementService"
 import { getHeroImage, updateHeroImage } from "../services/settingsService"
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable
+} from "@dnd-kit/sortable"
 
 export default function Admin(){
 
@@ -274,6 +287,38 @@ const removeAch = async (id) => {
   loadAchievements()
 }
 
+const sensors = useSensors(
+  useSensor(PointerSensor, {
+    activationConstraint: {
+      distance: 5,
+    },
+  })
+)
+
+const handleDragEnd = async (event) => {
+  const { active, over } = event
+  if (!over || active.id === over.id) return
+
+  const oldIndex = projects.findIndex((item) => item._id === active.id)
+  const newIndex = projects.findIndex((item) => item._id === over.id)
+  const moved = arrayMove(projects, oldIndex, newIndex)
+
+  setProjects(moved)
+
+  const orderedList = moved.map((proj, index) => ({
+    id: proj._id,
+    order: index * 10,
+  }))
+
+  try {
+    await updateProjectOrder(orderedList)
+  } catch (error) {
+    console.error("Failed to update project order:", error)
+    alert("Failed to update project order")
+    load()
+  }
+}
+
 return(
 
 <section
@@ -403,52 +448,20 @@ space-y-6
 
 </form>
 
-<div
-className="
-mt-16
-space-y-6
-"
->
-
-{
-
-projects.map(
-(item)=>(
-
-<div
-
-key={item._id}
-
-className="
-
-bg-white/5
-
-p-6
-
-rounded-2xl
-
-"
-
->
-
-<h3>
-
-{item.title}
-
-</h3>
-
-<div className="mt-4 flex gap-3">
-  <button onClick={() => editProject(item)} className="bg-blue-500 px-5 py-2 rounded">Edit</button>
-  <button onClick={() => remove(item._id)} className="bg-red-500 px-5 py-2 rounded">Delete</button>
-</div>
-
-</div>
-
-))
-
-}
-
-</div>
+<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+  <SortableContext items={projects.map((p) => p._id)} strategy={verticalListSortingStrategy}>
+    <div className="mt-16 space-y-6">
+      {projects.map((item) => (
+        <SortableProjectItem
+          key={item._id}
+          item={item}
+          editProject={editProject}
+          remove={remove}
+        />
+      ))}
+    </div>
+  </SortableContext>
+</DndContext>
 
 </>)}
 
@@ -544,3 +557,65 @@ rounded-2xl
 )
 
 }
+
+function SortableProjectItem({ item, editProject, remove }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: item._id })
+
+  const style = {
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    transition,
+    zIndex: isDragging ? 50 : undefined,
+  }
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`bg-white/5 p-6 rounded-2xl flex items-center justify-between gap-4 ${
+        isDragging ? "opacity-50 ring-2 ring-purple-600" : ""
+      }`}
+    >
+      <div className="flex items-center gap-4 flex-grow">
+        {/* Drag Handle */}
+        <button
+          type="button"
+          {...attributes}
+          {...listeners}
+          className="cursor-grab active:cursor-grabbing p-2 hover:bg-white/10 rounded flex items-center justify-center"
+          title="Drag to reorder"
+        >
+          <svg className="w-6 h-6 text-white/40 hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
+          </svg>
+        </button>
+        <div>
+          <h3 className="font-semibold text-lg">{item.title}</h3>
+          <p className="text-sm opacity-60">{item.category}</p>
+        </div>
+      </div>
+
+      <div className="flex gap-3 shrink-0">
+        <button
+          onClick={() => editProject(item)}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded transition-colors"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => remove(item._id)}
+          className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded transition-colors"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  )
+}
+

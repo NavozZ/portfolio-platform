@@ -162,3 +162,22 @@ message:error.message
 }
 
 }
+
+export const reorderProjects = async (req, res) => {
+  try {
+    const { orders } = req.body;
+    if (!Array.isArray(orders)) {
+      return res.status(400).json({ message: "Invalid payload, orders must be an array" });
+    }
+
+    await Promise.all(
+      orders.map(({ id, order }) =>
+        Project.findByIdAndUpdate(id, { order }, { new: true })
+      )
+    );
+
+    res.json({ message: "Projects reordered successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

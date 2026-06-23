@@ -55,3 +55,8 @@ export const getProjectById = async (id) => {
   return response.data
 }
 
+export const updateProjectOrder = async (orderedList) => {
+  const response = await axios.put(`${API}/reorder`, { orders: orderedList })
+  return response.data
+}
+

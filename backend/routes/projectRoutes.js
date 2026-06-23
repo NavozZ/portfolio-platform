@@ -10,7 +10,9 @@ createProject,
 
 deleteProject,
 
-updateProject
+updateProject,
+
+reorderProjects
 
 }
 
@@ -41,6 +43,11 @@ createProject
 router.delete(
 "/:id",
 deleteProject
+)
+
+router.put(
+"/reorder",
+reorderProjects
 )
 
 router.put(
