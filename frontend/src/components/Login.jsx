@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import axios from "axios"
+import { API_BASE } from "../services/apiConfig"
 
 export default function Login() {
     const [email, setEmail] = useState("")
@@ -11,7 +12,7 @@ export default function Login() {
 
     const submit = async () => {
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password })
+            const res = await axios.post(`${API_BASE}/auth/login`, { email, password })
             login(res.data.token)
             navigate("/admin")
         } catch {

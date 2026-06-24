@@ -1,6 +1,7 @@
 import axios from "axios"
+import { API_BASE } from "./apiConfig"
 
-const API = `${import.meta.env.VITE_API_URL}/achievements`
+const API = `${API_BASE}/achievements`
 
 export const getAchievements = async () => {
     const response = await axios.get(API)

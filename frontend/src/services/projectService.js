@@ -1,9 +1,7 @@
 import axios from "axios"
+import { API_BASE } from "./apiConfig"
 
-const API =
-
-`${import.meta.env
-.VITE_API_URL}/projects`
+const API = `${API_BASE}/projects`
 
 export const getProjects=
 async()=>{

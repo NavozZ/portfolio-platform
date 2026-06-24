@@ -1,6 +1,7 @@
 import axios from "axios"
+import { API_BASE } from "./apiConfig"
 
-const API = `${import.meta.env.VITE_API_URL}/settings`
+const API = `${API_BASE}/settings`
 
 export const getHeroImage = async () => {
   const response = await axios.get(`${API}/hero-image`)

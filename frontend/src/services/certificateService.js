@@ -1,6 +1,7 @@
 import axios from "axios"
+import { API_BASE } from "./apiConfig"
 
-const API = `${import.meta.env.VITE_API_URL}/certificates`
+const API = `${API_BASE}/certificates`
 
 export const getCertificates = async () => {
     const response = await axios.get(API)
